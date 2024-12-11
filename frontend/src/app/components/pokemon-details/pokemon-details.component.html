@@ -1,0 +1,64 @@
+<mat-card class="pokemon-card" *ngIf="pokemon">
+  <div
+    class="pokemon-header"
+    [ngStyle]="{ 'background-color': getTypeColor(pokemon.types[0].type.name) }"
+  >
+    <img [src]="selectedImage" loading="lazy" alt="{{ pokemon.name }}" class="pokemon-image" />
+  </div>
+
+  <!-- Miniaturas -->
+  <div class="thumbnail-container">
+    <img
+      *ngFor="let sprite of spriteUrls"
+      [src]="sprite"
+      alt="Sprite"
+      class="thumbnail"
+      loading="lazy"
+      (click)="selectImage(sprite)"
+    />
+  </div>
+
+  <mat-card-title class="pokemon-name">{{
+    pokemon.name | titlecase
+  }}</mat-card-title>
+
+  <div class="pokemon-types">
+    <mat-chip *ngFor="let type of pokemon.types" [ngStyle]="{ 'background-color': getTypeColor(pokemon.types[0].type.name) }" selected>
+      {{ type.type.name | titlecase }}
+    </mat-chip>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="pokemon-info-grid">
+    <div class="info-item">
+      <span class="info-label">Weight</span>
+      <span class="info-value"
+        >{{ convertWeightToLbs(pokemon.weight) }} lbs</span
+      >
+    </div>
+    <div class="info-item">
+      <span class="info-label">Height</span>
+      <span class="info-value"
+        >{{ convertHeightToInches(pokemon.height) }} in</span
+      >
+    </div>
+    <div class="info-item">
+      <span class="info-label">Category</span>
+      <span class="info-value">{{ pokemon.species.name | titlecase }}</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Ability</span>
+      <span class="info-value">{{
+        pokemon.abilities[0]?.ability.name | titlecase
+      }}</span>
+    </div>
+  </div>
+
+  <div class="button-container">
+    <button mat-raised-button color="accent" routerLink="/">
+      <mat-icon>arrow_back</mat-icon>
+      Back to the list
+    </button>
+  </div>
+</mat-card>

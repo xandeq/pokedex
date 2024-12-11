@@ -1,0 +1,49 @@
+<div class="container">
+  <h1 class="title">Pokédex Kids</h1>
+
+  <div class="search-container">
+    <mat-form-field appearance="outline" class="search-input">
+      <mat-label>Search for a Pokémon</mat-label>
+      <input
+        matInput
+        placeholder="Ex: Pikachu"
+        [(ngModel)]="searchTerm"
+        (keyup)="searchPokemon()"
+        (keyup.enter)="searchPokemon()"
+      />
+      <button mat-icon-button matSuffix (click)="searchPokemon()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="pokemons.length > 0" class="pokemon-cards">
+    <mat-card
+      class="pokemon-card"
+      *ngFor="let pokemon of pokemons"
+      (mouseover)="animateCard = true"
+      (mouseleave)="animateCard = false"
+      [@hoverAnimation]="animateCard ? 'hovered' : 'default'"
+    >
+      <a [routerLink]="['/pokemon', pokemon.name]" class="card-link">
+        <mat-card-header>
+          <mat-card-title class="pokemon-name">{{ pokemon.name | titlecase }}</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="types">
+          <mat-chip-listbox>
+            <mat-chip color="primary" *ngFor="let type of pokemon.types">
+              {{ type | titlecase }}
+            </mat-chip>
+          </mat-chip-listbox>
+        </mat-card-content>
+      </a>
+    </mat-card>
+  </div>
+
+  <button mat-raised-button color="accent" class="load-more-button" (click)="loadMore()" *ngIf="pokemons.length > 0">
+    <mat-icon>download</mat-icon>
+    Load More
+  </button>
+
+</div>
