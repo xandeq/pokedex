@@ -18,7 +18,6 @@ export class PokemonDetailsComponent implements OnInit {
     const name = this.route.snapshot.paramMap.get('name');
     if (name) {
       this.pokemonService.getPokemonDetails(name).subscribe((data) => {
-        console.log(data);
         this.pokemon = data;
         this.loadSprites();
       });
